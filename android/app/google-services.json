@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "887360695634",
+    "project_id": "nutrix-4bfd5",
+    "storage_bucket": "nutrix-4bfd5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887360695634:android:5b9494dfa3064107c91e8b",
+        "android_client_info": {
+          "package_name": "com.example.nutrix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASDK385DzsdtynQrZ0qNFy4eODC2lOUiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:887360695634:android:4f346e81b26f68f6c91e8b",
+        "android_client_info": {
+          "package_name": "com.example.nutrix_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASDK385DzsdtynQrZ0qNFy4eODC2lOUiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,17 @@
+// Gradle init script to handle build directory lock issues
+gradle.projectsLoaded {
+    rootProject.allprojects {
+        tasks.matching { it.name.contains("dexBuilder") || it.name.contains("DexBuilder") }.configureEach {
+            doFirst {
+                def outDir = file("${project.buildDir}/intermediates/project_dex_archive/debug/dexBuilderDebug/out")
+                if (outDir.exists()) {
+                    try {
+                        outDir.deleteDir()
+                    } catch (Exception e) {
+                        logger.warn("Could not delete ${outDir.absolutePath}: ${e.message}. Continuing with build...")
+                    }
+                }
+            }
+        }
+    }
+}

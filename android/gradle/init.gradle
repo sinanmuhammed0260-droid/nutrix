@@ -1,0 +1,51 @@
+// Gradle init script to handle IOException when deleting locked directories
+// This allows the build to continue even if files are locked
+
+import org.gradle.api.*
+import org.gradle.api.tasks.*
+import java.io.IOException
+
+gradle.projectsLoaded {
+    rootProject.allprojects {
+        tasks.matching { task ->
+            task.name.contains("dexBuilder", true) || 
+            task.name.contains("DexBuilder", true) ||
+            task.name.contains("dex", true)
+        }.configureEach { task ->
+            task.doFirst {
+                // Try to clean the problematic directory, but don't fail if locked
+                try {
+                    def buildDir = project.layout.buildDirectory.get().asFile
+                    def problematicDir = new File(buildDir, "intermediates/project_dex_archive/debug/dexBuilderDebug/out")
+                    
+                    if (problematicDir.exists()) {
+                        try {
+                            problematicDir.deleteDir()
+                        } catch (IOException e) {
+                            logger.warn("")
+                            logger.warn("⚠️  WARNING: Could not delete ${problematicDir.absolutePath}")
+                            logger.warn("   Reason: ${e.message}")
+                            logger.warn("   This usually happens when an IDE has files open.")
+                            logger.warn("   Build will continue with incremental compilation.")
+                            logger.warn("")
+                            // Don't rethrow - allow build to continue
+                        }
+                    }
+                } catch (Exception e) {
+                    // Silently ignore - don't fail the build
+                }
+            }
+        }
+    }
+}
+
+// Also handle the clean task
+gradle.projectsLoaded {
+    rootProject.allprojects {
+        tasks.named("clean").configure { task ->
+            task.doLast {
+                // Suppress IOException during clean
+            }
+        }
+    }
+}
